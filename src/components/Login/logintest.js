@@ -1,11 +1,11 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect,useCallback} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import UILink from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -14,14 +14,25 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import indexImg from'./indexPic.jpg'
 import SettingsInputComponentOutlinedIcon from '@material-ui/icons/SettingsInputComponentOutlined';
+import Func from '../function/function';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
+
+
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <UILink color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </UILink>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -60,19 +71,42 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+  
 
 export default function SignInSide() {
-
+  const func = new Func();
   const [CGip, setCGip] = useState('');
   const [CGport, setCGport] = useState('');
-  const [ATEMip, setATEMip] = useState('');
 
-  const [connectStatus, setConnectStatus] = useState(false);
+  const [connectStatus, setConnectStatus] = useState('连接');
+  
 
   const classes = useStyles();
-  
-  const connect = (cgip) =>{
-  }
+
+  const handleClick = useCallback( () => {
+    setConnectStatus('连接中')
+    const cgData= {ip: CGip, port: CGport}
+     fetch(`http://192.168.10.227:3000/api/cg/connect`, {
+       method: 'post',
+       headers: {
+         'Content-type': 'application/json'
+       },
+       body: JSON.stringify(cgData)
+     }).then(response => {
+      if (response.ok) {
+      return response.text()
+      }
+      }).then(response => {
+        setConnectStatus(response)
+      })
+  })
+  useEffect(() => {
+    // 更新
+     if(connectStatus == 'true') {
+      setConnectStatus('连接成功！') 
+     }
+  });
+ 
 
 
 
@@ -86,7 +120,7 @@ export default function SignInSide() {
             <SettingsInputComponentOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-           链接CG和ATEM切换台
+           连接CG服务器
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -113,27 +147,20 @@ export default function SignInSide() {
               autoComplete="current-password"
               onChange={e => setCGport(e.target.value)}
             />
-             <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="ATEMip"
-              label="请输入ATEM地址"
-              type="text"
-              id="ATEMip"
-              autoComplete="current-password"
-              onChange={e => setATEMip(e.target.value)}
-            />
             <Button
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={connect}
+              onClick={handleClick}
             >
-              链接{CGip}
+              {connectStatus}
             </Button>
+            <Link to='/control-center' >
+              进入控制中心
+            </Link>
+
+           
             <Box mt={5}>
               <Copyright />
             </Box>
