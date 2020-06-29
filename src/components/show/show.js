@@ -20,6 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import {Link as ReactLink } from 'react-router-dom';
+import Topic from './topic'
 
 
 const drawerWidth = 240;
@@ -61,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    paddingLeft: 3,
   },
   drawerPaper: {
     position: 'relative',
@@ -102,18 +104,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+
+
+
+export default function Show() {
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [topicId, setTopicId] = React.useState(2)
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleClick = () => {
+    setTopicId(1)
+  }
+
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  return (
+
+  return(
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -128,7 +142,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            控制中心
+            随风扯淡秀
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -155,31 +169,15 @@ export default function Dashboard() {
         <List>{secondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3} component="h1" >
-            {/* Chart */}
-            <Grid item xs={12} md={4} lg={3} >
-              <ReactLink to='/control-center/show' style={{ textDecoration: 'none' }}>
-              <Paper className={fixedHeightPaper} elevation={3}>
-                随风扯淡秀
-                <img src='' />
-              </Paper>
-              </ReactLink>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper} elevation={3}>
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12} md={4} lg={3} >
-              <Paper className={fixedHeightPaper} elevation={3}>
-              </Paper>
-            </Grid>
+          {Topic(topicId)}
           </Grid>
+          <button onClick={handleClick}>eee</button>
         </Container>
       </main>
     </div>
-  );
-}
+    
+  )
+
+};
