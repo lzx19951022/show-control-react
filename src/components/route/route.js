@@ -3,7 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 
 import Sign from '../Login/logintest';
 import Set  from '../Set/Dashboard';
-import show from '../show/show.js'
+import {Topic1} from '../show/topicFirst.js'
+import {Topic2} from '../show/topicSecond.js'
 
 
 const Main = () => {
@@ -11,7 +12,8 @@ const Main = () => {
     <Switch> {/* The Switch decides which component to show based on the current URL.*/}
       <Route exact path='/' component={Sign}></Route>
       <Route exact path='/control-center' component={Set}></Route>
-      <Route exact path='/control-center/show' component={show}></Route>
+      <Route exact path='/control-center/show/topic1' component={Topic1}></Route>
+      <Route exact path='/control-center/show/topic2' component={Topic2}></Route>
     </Switch>
   );
 }

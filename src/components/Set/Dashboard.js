@@ -160,7 +160,7 @@ export default function Dashboard() {
           <Grid container spacing={3} component="h1" >
             {/* Chart */}
             <Grid item xs={12} md={4} lg={3} >
-              <ReactLink to='/control-center/show' style={{ textDecoration: 'none' }}>
+              <ReactLink to='/control-center/show/topic1' style={{ textDecoration: 'none' }}>
               <Paper className={fixedHeightPaper} elevation={3}>
                 随风扯淡秀
                 <img src='' />

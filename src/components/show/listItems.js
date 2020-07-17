@@ -9,21 +9,28 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import { useEffect, useState } from 'react';
+import {Link as ReactLink } from 'react-router-dom';
 
 
 export const mainListItems = (
+
   <div>
-    <ListItem button>
+    <ListItem button >
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
+      <ReactLink to='/control-center/show/topic1' style={{ textDecoration: 'none' }}>
       <ListItemText primary="话题1" />
+      </ReactLink>
     </ListItem>
-    <ListItem button>
+    <ListItem button >
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
+      <ReactLink to='/control-center/show/topic2' style={{ textDecoration: 'none' }}>
       <ListItemText primary="话题2" />
+      </ReactLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
@@ -44,7 +51,8 @@ export const mainListItems = (
       <ListItemText primary="话题5" />
     </ListItem>
   </div>
-);
+
+ ) 
 
 export const secondaryListItems = (
   <div>

@@ -86,7 +86,7 @@ export default function SignInSide() {
   const handleClick = useCallback( () => {
     setConnectStatus('连接中')
     const cgData= {ip: CGip, port: CGport}
-     fetch(`http://192.168.10.227:3000/api/cg/connect`, {
+     fetch(`http://127.0.0.1:3000/api/cg/connect`, {
        method: 'post',
        headers: {
          'Content-type': 'application/json'
@@ -103,7 +103,7 @@ export default function SignInSide() {
   useEffect(() => {
     // 更新
      if(connectStatus == 'true') {
-      setConnectStatus('连接成功！') 
+      setConnectStatus('连接成功！请点击下方的进入控制台') 
      }
   });
  
